@@ -43,3 +43,129 @@ public:
 		Node* currentNode = nullptr;
 		search(element, parent, currentNode); // Locate the node which will be the parent of the node to be insert
 
+		if (parent == nullptr) //if the parent is Null (Tree is empty)
+		{
+			ROOT = newNode; // Mark the new node as ROOT
+			return; //Exit
+		}
+		if (element < parent->info) // if the value in the dta field of the new node is less than that of the
+		{
+			parent->leftchild = newNode; // Make the left child of the parent poiint to the new node
+		}
+		else if (element > parent->info) //if th value in the data field of the new node is greater than that
+		{
+			parent->rightchild = newNode; // Make the right child of the parent point to the new node
+		}
+	}
+
+	void search(string element, Node*& parent, Node*& currentNode)
+	{
+		//this function searches the currentNode of the specified Node as well as the curent Node of itss parent
+		currentNode = ROOT;
+		parent = nullptr;
+		while ((currentNode != nullptr) && (currentNode->info != element))
+		{
+			parent = currentNode;
+			if (element < currentNode->info)
+				currentNode = currentNode->leftchild;
+			else
+				currentNode = currentNode->rightchild;
+		}
+	}
+	void inorder(Node* ptr)
+	{
+		if (ROOT == nullptr)
+		{
+			cout << "Tree is empty" << endl;
+			return;
+		}
+		if (ptr != nullptr)
+		{
+			inorder(ptr->leftchild);
+			cout << ptr->info << " ";
+			inorder(ptr->rightchild);
+		}
+	}
+
+	void preorder(Node* ptr)
+	{
+		if (ROOT == nullptr)
+		{
+			cout << "Tree is empty" << endl;
+			return;
+		}
+		if (ptr != nullptr)
+		{
+			cout << ptr->info << " ";
+			preorder(ptr->leftchild);
+			preorder(ptr->rightchild);
+		}
+	}
+	void postorder(Node* ptr)
+	{
+		//perfom the postorder tranversal of the tree
+		if (ROOT == nullptr)
+		{
+			cout << "Tree is empty" << endl;
+			return;
+		}
+		if (ptr != nullptr)
+		{
+			postorder(ptr->leftchild);
+			postorder(ptr->rightchild);
+			cout << ptr->info << " ";
+		}
+	}
+};
+
+int main()
+{
+	BinaryTree x;
+	while (true)
+	{
+		cout << "\nMenu" << endl;
+		cout << "1. Implement insert operation" << endl;
+		cout << "2. perform inorder traversal" << endl;
+		cout << "3. perform preorder traversal" << endl;
+		cout << "4. perform postorder traversal" << endl;
+		cout << "Exit" << endl;
+		cout << "\nEnter your choice (1-5) :  ";
+
+		char ch;
+		cin >> ch;
+		cout << endl;
+
+		switch (ch)
+		{
+		case '1':
+		{
+			cout << "Enter a word : ";
+			string word;
+			cin >> word;
+			x.insert(word);
+			break;
+		}
+		case '2':
+		{
+			x.inorder(x.ROOT);
+			break;
+		}
+		case '3':
+		{
+			x.preorder(x.ROOT);
+			break;
+		}
+		case '4':
+		{
+			x.postorder(x.ROOT);
+			break;
+		}
+		case '5':
+			return 0;
+			break;
+		default:
+			cout << "Invalid option" << endl;
+		}
+	}	
+}
+
